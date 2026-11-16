@@ -213,6 +213,7 @@
     .pf-hero { display: grid; grid-template-columns: minmax(0, 6.5fr) minmax(0, 5.5fr); gap: clamp(20px, 4vw, 56px); align-items: center; background: var(--tone); color: var(--on-tone, var(--plum)); border-radius: var(--r-lg); padding: clamp(24px, 4.4vw, 60px); }
     .pf-hero a { color: inherit; }
     .pf-hero .lede { color: inherit; }
+    .tone-tag .pf-hero { background: var(--sky); }
     .pf-hero .art { padding: 0 8%; }
     .tone-tag .pf-hero img.media { display: block; aspect-ratio: auto; object-fit: contain; }
     @media (min-width: 1000px) {
@@ -347,7 +348,8 @@
       .contact-grid { grid-template-columns: minmax(0, 1fr); }
       .filters { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
       .filters > :first-child, .filters .f-search { grid-column: 1 / -1; }
-      .pf-hero .art { max-width: 380px; }
+      .tone-tag .pf-hero { background: var(--sky); }
+    .pf-hero .art { max-width: 380px; }
     }
     @media (max-width: 560px) {
       .hiring { grid-template-columns: minmax(0, 1fr); }
