@@ -6,7 +6,7 @@ nav:
 
 
 Our lab develops real-time decision-making methods, grounded in control, optimization, learning, and probability theory, that let autonomous agents work seamlessly alongside humans to solve complex real-world problems.
-**Technical areas**: reinforcement learning, learning in games, distributed learning and optimization, generative AI, generative diffusion models, fault-tolerance  
+**Technical areas**: reinforcement learning, learning in games, distributed learning and optimization, control theory, fault-tolerance  
 
 
 {%
