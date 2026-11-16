@@ -381,7 +381,7 @@ nav:
     .qa-page { padding-block: 0 64px; }
     .qa-page .page-head { text-align: center; }
     .qa-page .page-head h1 { font-size: clamp(1.7rem, 4vw, 3rem); line-height: 1.12; }
-    .qa-page .pf-card { width: fit-content; max-width: 100%; margin-inline: auto; }
+    .qa-page .pf-prose { max-width: none; }
     .qa-page .pf-prose > h2 { margin: 28px 0 12px; }
     .qa-page .pf-prose > p { margin: 14px 0; }
     </style>
