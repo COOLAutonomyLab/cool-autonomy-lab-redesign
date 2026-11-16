@@ -380,6 +380,8 @@ nav:
     }
 
     .qa-page { padding-block: 0 64px; }
+    .qa-page .page-head { text-align: center; }
+    .qa-page .pf-card { width: fit-content; max-width: 100%; margin-inline: auto; }
     .qa-page .pf-prose > h2 { margin: 28px 0 12px; }
     .qa-page .pf-prose > p { margin: 14px 0; }
     </style>
