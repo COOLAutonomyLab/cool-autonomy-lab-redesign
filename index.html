@@ -617,8 +617,6 @@
       <div class="wrap" style="padding-bottom:64px">
         <h2 class="kind-title">What we work on</h2>
         <ul class="theme-tiles" id="theme-tiles"></ul>
-        <h2 class="kind-title">Technical areas</h2>
-        <ul class="area-pills" id="areas"></ul>
         <h2 class="kind-title">Funded projects</h2>
         <ul class="projects" id="projects"></ul>
         <h2 class="kind-title">Where it goes next</h2>
@@ -753,6 +751,7 @@
         { tag: 'Award',     text: 'Thinh received the 2025 IEEE CSS Antonio Ruberti Young Researcher Prize for fundamental contributions to the optimization and control theoretic foundations of machine learning.',
           link: { text: 'ASE Department News', href: 'https://ae.utexas.edu/news/thinh-doan-wins-antonio-ruberti-young-researcher-prize' } },
         { tag: 'People',    text: 'Welcome Jiwon Lee (PhD, Spring 2026), and Dat Nguyen and Trung Truong (undergraduates, Fall 2025).' },
+        { tag: 'People',    text: 'Welcome Sichang Su, who joins as a PhD student co-advised with Prof. Ufuk Topcu.' },
         { tag: 'Project',   text: 'UT Portugal Exploratory Project on Space Distributed Ocean Monitorization and Exploration, with Universidade NOVA de Lisboa: integrating reinforcement learning into safe and robust control for multi-robot systems.' },
         { tag: 'Paper',     text: 'Paper on fast two-time-scale stochastic approximation accepted to IEEE Transactions on Automatic Control.' },
         { tag: 'Milestone', text: 'Dr. Amit Dutta defended his Ph.D. thesis (ECE, Virginia Tech).' },
@@ -964,7 +963,6 @@
          page (lightly edited). Project `image` is a file under the site's images/ folder;
          set fit: 'contain' for diagrams that should not be cropped. */
       research: {
-        areas: ['Reinforcement learning', 'Learning in games', 'Distributed learning and optimization', 'Generative AI', 'Generative diffusion models', 'Fault tolerance'],
         projects: [
           { sponsor: 'NSF CAREER', href: './research/CAREER/', title: 'Foundations of Scalable and Resilient Distributed Real-Time Decision Making in Open Multi-Agent Systems',
             image: 'research/CAREER/drone-fires.jpg', alt: 'Three quadrotors flying over a forest wildfire' },
@@ -983,9 +981,9 @@
       /* Research themes shown on Home (as pills) and on the Research page (draft copy, edit freely). */
       themes: [
         { key: 'control', name: 'Control', text: 'Safe and robust control for robots that have to act in real time, under uncertainty and disturbances.' },
-        { key: 'optim',   name: 'Optimization', text: 'Distributed and stochastic optimization, including two-time-scale methods with finite-time guarantees.' },
-        { key: 'learn',   name: 'Online learning', text: 'Reinforcement learning and stochastic approximation that keep learning as new data arrives.' },
-        { key: 'multi',   name: 'Multi-robot systems', text: 'Teams of aerial and ground robots that coordinate, compete in games, and tolerate faulty teammates.' }
+        { key: 'optim',   name: 'Optimization', text: 'We design distributed stochastic optimization algorithms for large-scale, open multi-agent networks in which agents can join or leave at any time.' },
+        { key: 'learn',   name: 'Online learning', text: 'We develop online reinforcement learning methods that adapt in real time as new tasks arise.' },
+        { key: 'multi',   name: 'Multi-agent systems', text: 'We design safe, resilient, distributed control algorithms, built on game-theoretic models, that enable teams of heterogeneous robots to complete their tasks despite uncertainty and adversarial attacks.' }
       ]
     };
     SITE.pubs = SITE.pubs.sort((a, b) => b.year - a.year);   // newest first; the sort is stable
@@ -1326,7 +1324,6 @@ ${p.slug === 'tag' ? `
         /* Team alumni, Research page, publication count */
         $('#alumni').innerHTML = SITE.alumni.map(a => `<li><strong>${esc(a.name)}</strong><span>${esc(a.was)}.${a.now ? ' Now: ' + esc(a.now) + '.' : ''}</span></li>`).join('');
         const R = SITE.research;
-        $('#areas').innerHTML = R.areas.map(a => `<li>${esc(a)}</li>`).join('');
         $('#projects').innerHTML = R.projects.map(p => `<li class="project"><img src="${esc(SITE.imageBase + p.image)}" alt="${esc(p.alt)}" loading="lazy"${p.fit === 'contain' ? ' class="contain"' : ''}><div class="project-text"><span class="sponsor">${esc(p.sponsor)}</span><h3><a href="${esc(p.href)}">${esc(p.title)}</a></h3></div></li>`).join('');
         $('#pub-real-count').textContent = SITE.pubs.filter(p => !p.placeholder).length;
         const tones = ['--sky', '--rose', '--mint', '--lilac'];
