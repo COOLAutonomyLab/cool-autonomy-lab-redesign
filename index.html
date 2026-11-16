@@ -90,6 +90,7 @@
     .ic      { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
     .ic-fill { fill: currentColor; }
     .ill { --iw: 2.8; width: 100%; height: auto; overflow: visible; }
+    .dd-list b, .tile-short b { color: var(--berry); }
     img.media { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--r-md); }
     .icon { width: 1.25em; height: 1.25em; }
 
@@ -652,10 +653,6 @@
 
     <!-- ================= PUBLICATIONS ================= -->
     <section data-view="publications" hidden>
-      <div class="wrap page-head">
-        <h1>Publications</h1>
-        <p class="lede" style="font-size:1.0625rem"><span id="pub-real-count"></span> papers from Thinh&rsquo;s own publication list and arXiv; the complete record is on <a href="https://scholar.google.com/citations?user=FiN_HnEAAAAJ&amp;hl=en" rel="noopener">Google Scholar</a>. Entries marked <span class="ph" style="margin-left:0">Placeholder</span> are dummy papers that show how platform tags work.</p>
-      </div>
       <div class="wrap" style="padding-bottom:64px">
         <h2 class="sr-only">Filter papers</h2>
         <div class="filters">
@@ -738,7 +735,7 @@
           blurb: 'Ground robots that can move in any direction without turning first.',
           image: null, video: null },
         { slug: 'tag', name: 'TAG', chip: 'TAG', kind: 'Game', group: 'Game Testbed',
-          short: 'A labyrinth game platform',
+          short: 'Testbed for Autonomous Games',
           blurb: 'Testbed for Autonomous Games: a tilting labyrinth board, a marble, and a rotary pendulum riding on top.',
           image: 'https://coolautonomylab.github.io/research/TAG/assets/images/tag_physical_hardware.png', video: 'https://coolautonomylab.github.io/research/TAG/assets/videos/tag_real.mp4' },
         { slug: 'exodia', name: 'Exodia', chip: 'Exodia', kind: 'Simulation', flagship: true,
@@ -1146,7 +1143,7 @@
 
     /* ---------- Navigation: Platforms disclosure menu + mobile menu ---------- */
     function defaultMenu() {
-      const item = p => `<li><a href="#/platforms/${p.slug}"><strong>${esc(p.name)}</strong><span>${esc(p.short)}</span></a></li>`;
+      const item = p => `<li><a href="#/platforms/${p.slug}"><strong>${esc(p.name)}</strong><span>${p.slug === 'tag' ? '<b>T</b>estbed for <b>A</b>utonomous <b>G</b>ames' : esc(p.short)}</span></a></li>`;
       const groups = [];
       HARDWARE.forEach(p => {
         const last = groups[groups.length - 1];
@@ -1249,7 +1246,7 @@
        CONCEPT 4 TEMPLATES: how each data item is drawn in this design.
        ===================================================================== */
     const ph = '<span class="ph">Placeholder</span>';
-    const tile = p => `<a class="tile tone-${p.slug}" href="#/platforms/${p.slug}"><span class="art">${media(p)}</span><span class="tile-text"><strong class="tile-name">${esc(p.name)}</strong><span class="tile-short">${esc(p.short)}</span>${p.flagship ? '' : '<span class="tile-twin">Twin in Exodia</span>'}</span></a>`;
+    const tile = p => `<a class="tile tone-${p.slug}" href="#/platforms/${p.slug}"><span class="art">${media(p)}</span><span class="tile-text"><strong class="tile-name">${esc(p.name)}</strong><span class="tile-short">${p.slug === 'tag' ? '<b>T</b>estbed for <b>A</b>utonomous <b>G</b>ames' : esc(p.short)}</span>${p.flagship ? '' : '<span class="tile-twin">Twin in Exodia</span>'}</span></a>`;
 
     /* The Exodia game board: one station per hardware platform, in that platform's colour, all tied
        to the simulator in the middle. Stations are spaced evenly round an ellipse, so the board
@@ -1327,7 +1324,6 @@ ${p.slug === 'tag' ? `
         $('#alumni').innerHTML = SITE.alumni.map(a => `<li><strong>${esc(a.name)}</strong><span>${esc(a.was)}.${a.now ? ' Now: ' + esc(a.now) + '.' : ''}</span></li>`).join('');
         const R = SITE.research;
         $('#projects').innerHTML = R.projects.map(p => `<li class="project"><img src="${esc(SITE.imageBase + p.image)}" alt="${esc(p.alt)}" loading="lazy"${p.fit === 'contain' ? ' class="contain"' : ''}><div class="project-text"><span class="sponsor">${esc(p.sponsor)}</span><h3><a href="${esc(p.href)}">${esc(p.title)}</a></h3></div></li>`).join('');
-        $('#pub-real-count').textContent = SITE.pubs.filter(p => !p.placeholder).length;
         const tones = ['--sky', '--rose', '--mint', '--lilac'];
         $('#theme-pills').innerHTML = SITE.themes.map((t, i) => `<li style="--tone:var(${tones[i]})">${icon(t.key)}${esc(t.name)}</li>`).join('');
         $('#theme-tiles').innerHTML = SITE.themes.map((t, i) => `<li style="--tone:var(${tones[i]})">${icon(t.key)}<h3>${esc(t.name)}</h3><p>${esc(t.text)}</p></li>`).join('');
