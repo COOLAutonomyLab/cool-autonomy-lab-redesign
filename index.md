@@ -1,5 +1,6 @@
 ---
-title: Home
+title: Lab overview
+permalink: /overview/
 ---
 
 # COOL Autonomy Lab
