@@ -72,6 +72,7 @@
     .wrap { width: min(1220px, 100% - 2 * var(--gutter)); margin-inline: auto; }
     .section { padding-block: clamp(40px, 6vw, 84px); }
     .h2 { font: 800 clamp(2rem, 4.4vw, 3.25rem)/1.05 var(--font); letter-spacing: -.02em; }
+    .research-intro.lede { max-width: none; margin-bottom: 24px; }
     .lede { font-size: clamp(1.125rem, 1.6vw, 1.25rem); line-height: 1.55; max-width: 58ch; color: var(--plum-soft); margin-top: 14px; }
     .ph { display: inline-block; font: 500 .8125rem/1 var(--font); border: 2px dashed var(--plum-soft); color: var(--plum-soft); border-radius: 99px; padding: .4em .8em; margin-left: .6em; vertical-align: .3em; white-space: nowrap; background: var(--milk); }
 
@@ -624,10 +625,7 @@ window.addEventListener('message', event => {
 
     <!-- ================= RESEARCH ================= -->
     <section data-view="research" hidden>
-      <div class="wrap page-head">
-        <p class="lede">Our lab develops real-time decision-making methods, grounded in control, optimization, learning, and probability theory, that let autonomous agents work seamlessly alongside humans to solve complex real-world problems.</p>
-      </div>
-      <div class="wrap" style="padding-bottom:64px">
+      <div class="wrap" style="padding-block:clamp(20px, 4vw, 48px) 64px">
         <iframe id="research-technology-diagram" title="Technology and user interface diagram" sandbox="allow-scripts" loading="lazy" style="display:block;width:100%;height:640px;border:0" srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
 &lt;head&gt;
@@ -793,7 +791,7 @@ button{ font:inherit; }
   .cx-photo.b{ opacity:0; }
 }
 &lt;/style&gt;
-&lt;style&gt;.cx-page { width: 100%; padding-block: 0 1rem; }&lt;/style&gt;&lt;/head&gt;
+&lt;style&gt;.cx-page { width: 100%; padding-block: 0 1rem; }&lt;/style&gt;&lt;style&gt;:root, :root:not([data-theme=&quot;light&quot;]) { --bg: var(--milk); --ink: var(--plum); --ink-soft: var(--plum-soft); --accent: var(--berry); --on-accent: #fff; } .cx-tech, .cx-ui { background: var(--bg); }&lt;/style&gt;&lt;/head&gt;
 &lt;body&gt;
 &lt;main class=&quot;cx-page&quot;&gt;
 &lt;!-- ===================== BEGIN: human–technology diagram ===================== --&gt;
@@ -1209,6 +1207,7 @@ window.addEventListener(&#x27;load&#x27;, reportHeight);
 &lt;/script&gt;&lt;/body&gt;
 &lt;/html&gt;
 "></iframe>
+        <p class="lede research-intro">Our lab develops real-time decision-making methods, grounded in control, optimization, learning, and probability theory, that let autonomous agents work seamlessly alongside humans to solve complex real-world problems.</p>
         <h2 class="kind-title">What we work on</h2>
         <ul class="theme-tiles" id="theme-tiles"></ul>
         <h2 class="kind-title">Funded projects</h2>
