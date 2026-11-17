@@ -1170,27 +1170,17 @@ window.addEventListener(&#x27;load&#x27;, reportHeight);
         <p class="lede research-intro">Our lab develops real-time decision-making methods, grounded in control, optimization, learning, and probability theory, that let autonomous agents work seamlessly alongside humans to solve complex real-world problems.</p>
         <h2 class="kind-title">What we work on</h2>
         <ul class="theme-tiles" id="theme-tiles"></ul>
-        <h2 class="kind-title">Funded projects</h2>
-        <ul class="projects" id="projects"></ul>
-        <h2 class="kind-title">Where it goes next</h2>
-        <div class="next-links">
-          <a class="next-link" href="#/platforms" style="--tone:var(--sky)"><strong>Research Platforms</strong><span>The robots and the simulator we test these ideas on.</span></a>
+        <div class="next-links" style="margin-top:clamp(24px, 4vw, 40px)">
+          <a class="next-link" href="#/platforms" style="--tone:var(--sky)"><strong>Robotic Platforms</strong><span>Simulators and testbeds for our research.</span></a>
           <a class="next-link" href="#/publications" style="--tone:var(--lemon)"><strong>Publications</strong><span>The papers that come out of it.</span></a>
         </div>
       </div>
-      <div class="wrap" style="padding-bottom:24px"><a class="btn btn-line" href="./research/">Research details and funded projects</a></div>
     </section>
 
     <!-- ================= RESEARCH PLATFORMS (overview) ================= -->
     <section data-view="platforms" hidden>
-      <div class="wrap page-head">
-        <h1>Research Platforms</h1>
-        <p class="lede">Where the <a href="#/research">research</a> gets tested. Methods are analyzed on paper, rehearsed in simulation, and then run on the hardware below.</p>
-      </div>
       <div class="wrap" style="padding-bottom:64px">
         <div id="playground" style="padding-top:clamp(12px,2vw,24px)">
-          <h2 class="h2"><span id="platform-count">Seven</span> platforms, one playground</h2>
-          <p class="lede">Our robots fly, drive, and play games. Exodia is where they all meet: every one of them has a digital twin there, so an idea can be tried in simulation before it is tried for real.</p>
           <div class="hub-wrap" id="hub"></div>
           <p class="motion-ctl"><button class="btn btn-line btn-small" type="button" data-motion-toggle aria-pressed="false">Pause motion</button></p>
           <div class="families" id="families"></div>
@@ -1505,16 +1495,6 @@ window.addEventListener(&#x27;load&#x27;, reportHeight);
       /* RESEARCH page: focus text, technical areas and funded projects from the existing Research
          page (lightly edited). Project `image` is a file under the site's images/ folder;
          set fit: 'contain' for diagrams that should not be cropped. */
-      research: {
-        projects: [
-          { sponsor: 'NSF CAREER', href: './research/CAREER/', title: 'Foundations of Scalable and Resilient Distributed Real-Time Decision Making in Open Multi-Agent Systems',
-            image: 'research/CAREER/drone-fires.jpg', alt: 'Three quadrotors flying over a forest wildfire' },
-          { sponsor: 'AFOSR YIP', href: './research/YIP/', title: 'Foundations of Resilient Distributed Resource Allocation in Open Networks',
-            image: 'research/YIP/wireless-ra.jpg', fit: 'contain', alt: 'Diagram of phones, cars and vehicles in three groups, linked wirelessly to each other and to two cell towers' },
-          { sponsor: 'NSF CIF', href: './research/NSF-Multitask/', title: 'Mathematical and Algorithmic Foundations of Multi-Task Learning',
-            image: 'research/NSF-Multitask/drone_nav.jpg', alt: 'Four photos of drones at work: above a warehouse, in a forest, beside soldiers in a field, and over a city' }
-        ]
-      },
 
       /* Where the existing site's images live. Change to a relative path ('images/') once this
          page is part of the Jekyll site. */
@@ -1698,9 +1678,8 @@ window.addEventListener(&#x27;load&#x27;, reportHeight);
         ? `<li class="dd-group"><span class="dd-group-label" id="dd-${g.group.replace(/\W+/g, '-')}">${esc(g.group)}</span><ul aria-labelledby="dd-${g.group.replace(/\W+/g, '-')}">${g.items.map(item).join('')}</ul></li>`
         : g.items.map(item).join('')).join('');
       return `<div class="dd-grid">
-        <a class="dd-feature" href="#/platforms/${FLAGSHIP.slug}">${media(FLAGSHIP)}<span class="dd-feature-text"><strong>${esc(FLAGSHIP.name)}</strong><span>Flagship simulation platform, with a digital twin of every robot here</span></span></a>
+        <a class="dd-feature" href="#/platforms">${media(FLAGSHIP)}<span class="dd-feature-text"><strong>${esc(FLAGSHIP.name)}</strong><span>Flagship simulation platform, with a digital twin of every robot here</span></span></a>
         <ul class="dd-list">${list}</ul>
-        <a class="dd-all" href="#/platforms">All research platforms</a>
       </div>`;
     }
     let closeMenus = () => {};
@@ -1850,9 +1829,11 @@ ${p.slug === 'tag' ? `
             <section class="pf-card"><h2>${p.flagship ? 'Connected platforms' : 'Connected to'}</h2><p class="pf-prose" style="margin-bottom:16px">${p.flagship ? 'Each hardware platform below has a digital twin inside Exodia.' : `${esc(p.name)} has a digital twin in Exodia.`}</p><div class="linked">${c.connected.map(tile).join('')}</div></section>
           </div>
 `}
+${p.slug === 'tag' ? '' : `
           <section class="pf-card"><h2>Related publications</h2>
             ${c.related.length ? `<ul class="pubs" style="margin-top:0">${c.related.map(UI.pubItem).join('')}</ul><p style="margin-top:20px"><a class="btn btn-line" href="#/publications/${p.slug}">All ${esc(p.chip)} papers</a></p>` : '<p class="pf-prose">No papers are tagged with this platform yet.</p>'}
           </section>
+`}
         </article>`,
       init() {
         /* Research Platforms page: Exodia first, then the hardware under its group headings */
@@ -1863,11 +1844,8 @@ ${p.slug === 'tag' ? `
         const families = [];
         HARDWARE.forEach(p => { const last = families[families.length - 1]; if (last && last.name === p.group) last.items.push(p); else families.push({ name: p.group, items: [p] }); });
         $('#families').innerHTML = families.map(f => `<section class="family${f.items.length > 1 ? ' two' : ''}"><h3>${esc(f.name)}</h3><div class="family-tiles">${f.items.map(tile).join('')}</div></section>`).join('');
-        $('#platform-count').textContent = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'][SITE.platforms.length] || SITE.platforms.length;
         /* Team alumni, Research page, publication count */
         $('#alumni').innerHTML = SITE.alumni.map(a => `<li><strong>${esc(a.name)}</strong><span>${esc(a.was)}.${a.now ? ' Now: ' + esc(a.now) + '.' : ''}</span></li>`).join('');
-        const R = SITE.research;
-        $('#projects').innerHTML = R.projects.map(p => `<li class="project"><img src="${esc(SITE.imageBase + p.image)}" alt="${esc(p.alt)}" loading="lazy"${p.fit === 'contain' ? ' class="contain"' : ''}><div class="project-text"><span class="sponsor">${esc(p.sponsor)}</span><h3><a href="${esc(p.href)}">${esc(p.title)}</a></h3></div></li>`).join('');
         const tones = ['--sky', '--rose', '--mint', '--lilac'];
         $('#theme-pills').innerHTML = SITE.themes.map((t, i) => `<li style="--tone:var(${tones[i]})">${icon(t.key)}${esc(t.name)}</li>`).join('');
         $('#theme-tiles').innerHTML = SITE.themes.map((t, i) => `<li style="--tone:var(${tones[i]})">${icon(t.key)}<h3>${esc(t.name)}</h3><p>${esc(t.text)}</p></li>`).join('');
