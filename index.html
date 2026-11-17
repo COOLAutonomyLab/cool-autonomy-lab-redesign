@@ -1170,6 +1170,8 @@ window.addEventListener(&#x27;load&#x27;, reportHeight);
         <p class="lede research-intro">Our lab develops real-time decision-making methods, grounded in control, optimization, learning, and probability theory, that let autonomous agents work seamlessly alongside humans to solve complex real-world problems.</p>
         <h2 class="kind-title">What we work on</h2>
         <ul class="theme-tiles" id="theme-tiles"></ul>
+        <h2 class="kind-title">Funded projects</h2>
+        <ul class="projects" id="projects"></ul>
         <div class="next-links" style="margin-top:clamp(24px, 4vw, 40px)">
           <a class="next-link" href="#/platforms" style="--tone:var(--sky)"><strong>Robotic Platforms</strong><span>Simulators and testbeds for our research.</span></a>
           <a class="next-link" href="#/publications" style="--tone:var(--lemon)"><strong>Publications</strong><span>The papers that come out of it.</span></a>
@@ -1498,6 +1500,16 @@ window.addEventListener(&#x27;load&#x27;, reportHeight);
 
       /* Where the existing site's images live. Change to a relative path ('images/') once this
          page is part of the Jekyll site. */
+      research: {
+        projects: [
+          { sponsor: 'NSF CAREER', href: './research/CAREER/', title: 'Foundations of Scalable and Resilient Distributed Real-Time Decision Making in Open Multi-Agent Systems',
+            image: 'research/CAREER/drone-fires.jpg', alt: 'Three quadrotors flying over a forest wildfire' },
+          { sponsor: 'AFOSR YIP', href: './research/YIP/', title: 'Foundations of Resilient Distributed Resource Allocation in Open Networks',
+            image: 'research/YIP/wireless-ra.jpg', fit: 'contain', alt: 'Diagram of phones, cars and vehicles in three groups, linked wirelessly to each other and to two cell towers' },
+          { sponsor: 'NSF CIF', href: './research/NSF-Multitask/', title: 'Mathematical and Algorithmic Foundations of Multi-Task Learning',
+            image: 'research/NSF-Multitask/drone_nav.jpg', alt: 'Four photos of drones at work: above a warehouse, in a forest, beside soldiers in a field, and over a city' }
+        ]
+      },
       imageBase: 'https://coolautonomylab.github.io/images/',
       scholar: 'https://scholar.google.com/citations?user=FiN_HnEAAAAJ&hl=en',
 
@@ -1846,6 +1858,8 @@ ${p.slug === 'tag' ? '' : `
         $('#families').innerHTML = families.map(f => `<section class="family${f.items.length > 1 ? ' two' : ''}"><h3>${esc(f.name)}</h3><div class="family-tiles">${f.items.map(tile).join('')}</div></section>`).join('');
         /* Team alumni, Research page, publication count */
         $('#alumni').innerHTML = SITE.alumni.map(a => `<li><strong>${esc(a.name)}</strong><span>${esc(a.was)}.${a.now ? ' Now: ' + esc(a.now) + '.' : ''}</span></li>`).join('');
+        const R = SITE.research;
+        $('#projects').innerHTML = R.projects.map(p => `<li class="project"><img src="${esc(SITE.imageBase + p.image)}" alt="${esc(p.alt)}" loading="lazy"${p.fit === 'contain' ? ' class="contain"' : ''}><div class="project-text"><span class="sponsor">${esc(p.sponsor)}</span><h3><a href="${esc(p.href)}">${esc(p.title)}</a></h3></div></li>`).join('');
         const tones = ['--sky', '--rose', '--mint', '--lilac'];
         $('#theme-pills').innerHTML = SITE.themes.map((t, i) => `<li style="--tone:var(${tones[i]})">${icon(t.key)}${esc(t.name)}</li>`).join('');
         $('#theme-tiles').innerHTML = SITE.themes.map((t, i) => `<li style="--tone:var(${tones[i]})">${icon(t.key)}<h3>${esc(t.name)}</h3><p>${esc(t.text)}</p></li>`).join('');
