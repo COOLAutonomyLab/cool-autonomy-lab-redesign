@@ -1160,12 +1160,7 @@ requestAnimationFrame(frame);
 &lt;/script&gt;
 &lt;script&gt;
 const diagram = document.querySelector(&#x27;.cx-page&#x27;);
-const scaleDiagram = () =&gt; {
-  diagram.style.width = document.documentElement.clientWidth + &#x27;px&#x27;;
-  diagram.style.zoom = &#x27;0.85&#x27;;
-};
-window.addEventListener(&#x27;resize&#x27;, scaleDiagram);
-scaleDiagram();
+
 const reportHeight = () =&gt; parent.postMessage({ type: &#x27;cool-research-diagram-height&#x27;, height: Math.ceil(diagram.getBoundingClientRect().bottom) }, &#x27;*&#x27;);
 new ResizeObserver(reportHeight).observe(diagram);
 window.addEventListener(&#x27;load&#x27;, reportHeight);
