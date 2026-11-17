@@ -657,12 +657,6 @@ button{ font:inherit; }
 .cx-page{ width:min(1220px,100% - 2*clamp(16px,4vw,40px)); margin-inline:auto; padding-block:clamp(28px,5vw,64px); }
 
 /* ---------- section header ---------- */
-.cx-head{ display:flex; flex-wrap:wrap; gap:12px 16px; align-items:center; justify-content:flex-end; margin-bottom:10px; }
-.cx-ctrls{ display:flex; gap:10px; flex-wrap:wrap; }
-.cx-btn{ display:inline-flex; align-items:center; gap:.55em; font:700 1.0625rem/1.1 var(--font); padding:.8em 1.3em; border-radius:99px; border:2.5px solid var(--ink); background:transparent; color:var(--ink); cursor:pointer; transition:transform .15s, background .15s, color .15s; }
-.cx-btn:hover{ background:var(--ink); color:var(--bg); transform:translateY(-2px); }
-.cx-btn.primary{ background:var(--accent); border-color:var(--accent); color:var(--on-accent); }
-.cx-btn.primary:hover{ background:var(--ink); border-color:var(--ink); color:var(--bg); }
 
 /* ---------- layout ---------- */
 .cx-grid{ display:grid; grid-template-columns:minmax(0,1fr) 150px minmax(0,1.3fr); align-items:stretch; }
@@ -789,12 +783,6 @@ button{ font:inherit; }
 &lt;main class=&quot;cx-page&quot;&gt;
 &lt;!-- ===================== BEGIN: human–technology diagram ===================== --&gt;
 &lt;section class=&quot;cx&quot; aria-label=&quot;Technology and user interface diagram&quot;&gt;
-  &lt;div class=&quot;cx-head&quot;&gt;
-    &lt;div class=&quot;cx-ctrls&quot;&gt;
-      &lt;button class=&quot;cx-btn primary&quot; id=&quot;cx-demo&quot; type=&quot;button&quot; aria-pressed=&quot;false&quot;&gt;&lt;span aria-hidden=&quot;true&quot;&gt;▶&lt;/span&gt;&lt;span class=&quot;tx&quot;&gt;Play demo&lt;/span&gt;&lt;/button&gt;
-      &lt;button class=&quot;cx-btn&quot; id=&quot;cx-reset&quot; type=&quot;button&quot;&gt;Reset&lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
 
   &lt;div class=&quot;cx-stage&quot; id=&quot;cx-stage&quot;&gt;&lt;div class=&quot;cx-fit&quot; id=&quot;cx-fit&quot;&gt;
   &lt;div class=&quot;cx-grid&quot;&gt;
@@ -971,7 +959,7 @@ const CMD = { uav: { src: &#x27;uav&#x27;, def: [700, 250] }, sensor: { src: &#x
 
 const els = {
   link: $(&#x27;#cx-link&#x27;), live: $(&#x27;#cx-live&#x27;), screen: $(&#x27;#cx-screen&#x27;), map: $(&#x27;#cx-map&#x27;), ov: $(&#x27;#cx-map .ov&#x27;),
-  wp: $(&#x27;#cx-wp&#x27;), feed: $(&#x27;#cx-feed&#x27;), toast: $(&#x27;#cx-toast-m&#x27;), demo: $(&#x27;#cx-demo&#x27;), reset: $(&#x27;#cx-reset&#x27;),
+  wp: $(&#x27;#cx-wp&#x27;), feed: $(&#x27;#cx-feed&#x27;), toast: $(&#x27;#cx-toast-m&#x27;),
   line: $(&#x27;#cx-line&#x27;), area: $(&#x27;#cx-area&#x27;), user: $(&#x27;#cx-user&#x27;), wpm: $(&#x27;#cx-wpm&#x27;), drone: $(&#x27;#cx-drone&#x27;), perim: $(&#x27;#cx-perimpath&#x27;)
 };
 const tiles = Object.fromEntries($$(&#x27;.cx-src&#x27;).map(b =&gt; [b.dataset.src, b]));
@@ -988,7 +976,6 @@ const fresh = () =&gt; ({
 });
 let st = fresh();
 const timers = {};
-let demoT = [], demoOn = false;
 
 /* ---------- helpers ---------- */
 const gref = (x, y) =&gt; &#x27;ABCDEFGHIJ&#x27;[Math.min(9, Math.floor(x / 100))] + (Math.min(4, Math.floor(y / 96)) + 1);
@@ -1130,24 +1117,7 @@ function frame(ts) {
 }
 
 /* ---------- demo and reset ---------- */
-function setDemoUi(on) { demoOn = on; els.demo.setAttribute(&#x27;aria-pressed&#x27;, String(on)); $(&#x27;.tx&#x27;, els.demo).textContent = on ? &#x27;Stop demo&#x27; : &#x27;Play demo&#x27;; $(&#x27;span&#x27;, els.demo).textContent = on ? &#x27;❚❚&#x27; : &#x27;▶&#x27;; }
-function stopDemo() { demoT.forEach(clearTimeout); demoT = []; if (demoOn) setDemoUi(false); }
-function userAct() { if (demoOn) stopDemo(); }
-function startDemo() {
-  resetAll(true); setDemoUi(true);
-  const steps = [
-    [900, () =&gt; setSource(&#x27;sat&#x27;, true)],
-    [3200, () =&gt; setSource(&#x27;gnd&#x27;, true)],
-    [5400, () =&gt; setSource(&#x27;ai&#x27;, true)],
-    [8200, () =&gt; { setWp(700, 250); sendCommand(&#x27;uav&#x27;); }],
-    [13200, () =&gt; { setWp(430, 426); sendCommand(&#x27;sensor&#x27;); }],
-    [17800, () =&gt; { setWp(640, 300); sendCommand(&#x27;forecast&#x27;); }],
-    [24000, () =&gt; stopDemo()]
-  ];
-  steps.forEach(([ms, fn]) =&gt; demoT.push(setTimeout(fn, ms)));
-}
-function resetAll(keepDemo) {
-  if (!keepDemo) stopDemo();
+function resetAll() {
   ORDER.forEach(k =&gt; { clearInterval(timers[k]); delete timers[k]; });
   $$(&#x27;.cx-usr&#x27;, els.user).forEach(n =&gt; n.remove());
   st = fresh(); droneEnable(false);
@@ -1161,20 +1131,18 @@ function resetAll(keepDemo) {
 }
 
 /* ---------- wiring ---------- */
-ORDER.forEach(k =&gt; tiles[k].addEventListener(&#x27;click&#x27;, () =&gt; { userAct(); setSource(k, !st.on[k]); }));
-Object.keys(layerBtns).forEach(l =&gt; layerBtns[l].addEventListener(&#x27;click&#x27;, () =&gt; { userAct(); setLayer(l, !st.ly[l]); }));
+ORDER.forEach(k =&gt; tiles[k].addEventListener(&#x27;click&#x27;, () =&gt; { setSource(k, !st.on[k]); }));
+Object.keys(layerBtns).forEach(l =&gt; layerBtns[l].addEventListener(&#x27;click&#x27;, () =&gt; { setLayer(l, !st.ly[l]); }));
 els.map.addEventListener(&#x27;click&#x27;, e =&gt; {
-  userAct(); const r = els.map.getBoundingClientRect();
+  const r = els.map.getBoundingClientRect();
   setWp((e.clientX - r.left) / r.width * 1000, 29 + (e.clientY - r.top) / r.height * 420);
 });
 els.map.addEventListener(&#x27;keydown&#x27;, e =&gt; {
   const d = { ArrowLeft: [-24, 0], ArrowRight: [24, 0], ArrowUp: [0, -24], ArrowDown: [0, 24] }[e.key];
-  if (d) { e.preventDefault(); userAct(); const w = st.wp || { x: 500, y: 240 }; setWp(w.x + d[0], w.y + d[1]); }
-  else if (e.key === &#x27;Enter&#x27; || e.key === &#x27; &#x27;) { e.preventDefault(); userAct(); if (!st.wp) setWp(500, 240); }
+  if (d) { e.preventDefault(); const w = st.wp || { x: 500, y: 240 }; setWp(w.x + d[0], w.y + d[1]); }
+  else if (e.key === &#x27;Enter&#x27; || e.key === &#x27; &#x27;) { e.preventDefault(); if (!st.wp) setWp(500, 240); }
 });
-$$(&#x27;.cx-act&#x27;).forEach(b =&gt; b.addEventListener(&#x27;click&#x27;, () =&gt; { userAct(); sendCommand(b.dataset.cmd); }));
-els.demo.addEventListener(&#x27;click&#x27;, () =&gt; { demoOn ? stopDemo() : startDemo(); });
-els.reset.addEventListener(&#x27;click&#x27;, () =&gt; resetAll(false));
+$$(&#x27;.cx-act&#x27;).forEach(b =&gt; b.addEventListener(&#x27;click&#x27;, () =&gt; { sendCommand(b.dataset.cmd); }));
 
 /* ---------- keep both blocks on one line at every width: lay out at a design width, then scale to fit ---------- */
 const stage = $(&#x27;#cx-stage&#x27;), fitEl = $(&#x27;#cx-fit&#x27;), MIN_W = 1100;
@@ -1186,7 +1154,7 @@ function fitStage() {
 if (window.ResizeObserver) { const ro = new ResizeObserver(fitStage); ro.observe(stage); ro.observe(fitEl); }
 window.addEventListener(&#x27;resize&#x27;, fitStage); fitStage();
 
-resetAll(false);
+resetAll();
 requestAnimationFrame(frame);
 })();
 &lt;/script&gt;
