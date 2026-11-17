@@ -1698,7 +1698,7 @@ window.addEventListener(&#x27;load&#x27;, reportHeight);
         ? `<li class="dd-group"><span class="dd-group-label" id="dd-${g.group.replace(/\W+/g, '-')}">${esc(g.group)}</span><ul aria-labelledby="dd-${g.group.replace(/\W+/g, '-')}">${g.items.map(item).join('')}</ul></li>`
         : g.items.map(item).join('')).join('');
       return `<div class="dd-grid">
-        <a class="dd-feature" href="#/platforms">${media(FLAGSHIP)}<span class="dd-feature-text"><strong>${esc(FLAGSHIP.name)}</strong><span>Flagship simulation platform, with a digital twin of every robot here</span></span></a>
+        <a class="dd-feature" href="#/platforms">${media(FLAGSHIP)}<span class="dd-feature-text"><strong>${esc(FLAGSHIP.name)}</strong><span>Flagship digital-twin platform of our robots.</span></span></a>
         <ul class="dd-list">${list}</ul>
       </div>`;
     }
